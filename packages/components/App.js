@@ -16,7 +16,7 @@ export default function App(props) {
   ));
   return (
     <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap="5" my="5rem">
-      <InputField />
+      <InputField isSintaxValid={true} isPositionValid={true} />
       <Stack direction="column" w="80%" mx="auto" py="5rem" spacing="5">
         <Heading as="h3" fontFamily="Roboto" size="lg">
           {" "}
