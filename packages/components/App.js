@@ -6,7 +6,13 @@ import Square from "./Square";
 export default function App(props) {
   const [squares, setSquares] = useState(props.squares);
   const grid = squares.map((square) => (
-    <Square key={square.id} row={square.yPosition} col={square.xPosition} />
+    <Square
+      key={square.id}
+      row={square.yPosition}
+      col={square.xPosition}
+      occupied={square.occupied}
+      direction={square.direction}
+    />
   ));
   return (
     <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap="5" my="5rem">

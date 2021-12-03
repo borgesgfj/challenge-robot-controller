@@ -11,8 +11,12 @@ function createSquaresMatrix() {
         xPosition: x,
         yPosition: y,
         id: x + y * 5,
-        occuped: false,
+        occupied: false,
+        direction: "N",
       };
+      if (x == 0 && y == 0) {
+        squareObject.occupied = true;
+      }
       squaresMatrix.push(squareObject);
     }
   }
