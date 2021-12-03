@@ -1,7 +1,25 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import App from '../packages/components/App'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import App from "../packages/components/App";
+import styles from "../styles/Home.module.css";
+
+function createSquaresMatrix() {
+  const squaresMatrix = [];
+  for (let y = 4; y >= 0; y--) {
+    for (let x = 0; x < 5; x++) {
+      const squareObject = {
+        xPosition: x,
+        yPosition: y,
+        id: x + y * 5,
+        occuped: false,
+      };
+      squaresMatrix.push(squareObject);
+    }
+  }
+  return squaresMatrix;
+}
+
+const SQUARES_MATRIX = createSquaresMatrix();
 
 export default function Home() {
   return (
@@ -13,7 +31,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <App/>
+        <App squares={SQUARES_MATRIX} />
       </main>
 
       <footer className={styles.footer}>
@@ -22,12 +40,12 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
+  );
 }
