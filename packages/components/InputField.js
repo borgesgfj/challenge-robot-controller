@@ -5,19 +5,13 @@ import { useState } from "react";
 export default function InputField(props) {
   const [command, setCommand] = useState("");
   function handleChange(e) {
-    setCommand(e.target.value);
+    setCommand(e.target.value.toUpperCase());
   }
   function handleSubmit(e) {
     e.preventDefault();
     props.calculateCommand(command);
-    setName("");
+    setCommand("");
   }
-  /*   function isCommandValid(validSintax, validPosition) {
-    if (!validSintax | !validPosition) {
-      return false
-    }
-    return true
-  } */
 
   function StatusField() {
     if (props.isSintaxValid && props.isPositionValid) {
