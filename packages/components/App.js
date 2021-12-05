@@ -8,8 +8,6 @@ export default function App(props) {
   const grid = squares.map((square) => (
     <Square
       key={square.id}
-      row={square.yPosition}
-      col={square.xPosition}
       occupied={square.occupied}
       direction={square.direction}
     />

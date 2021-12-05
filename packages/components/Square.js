@@ -25,7 +25,6 @@ export default function Square(props) {
   );
   return (
     <Box
-      key={props.col + props.row * 5}
       bg="red.500"
       color="white"
       h="5rem"
