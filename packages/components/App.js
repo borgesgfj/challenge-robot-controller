@@ -5,8 +5,8 @@ import Square from "./Square";
 
 export default function App(props) {
   const [squares, setSquares] = useState(props.squares);
-  let positioErr = false;
-  let sintaxErr = false;
+  const [positionErr, setPositionErr] = useState(false)
+  const [sintaxErr, setSintaxErr] = useState(false)
   function calculateRotation(currentDirection, rotationCommand) {
     let finalDirection = 0;
     const directionToNumber = {
@@ -46,8 +46,9 @@ export default function App(props) {
         currentSquare.direction = moveDirection;
       }
       if (commandString[i] == "M") {
-        if (currentSquare.neighborsIndex[moveDirection] === undefined) {
-          return undefined;
+        if (currentSquare.neighborsIndex[moveDirection] === "") {
+          setPositionErr(true)
+          return (currentSquare = initialSquare)
         }
         nextSquareIndex = currentSquare.neighborsIndex[moveDirection];
         currentSquare = squares[nextSquareIndex];
@@ -71,6 +72,7 @@ export default function App(props) {
   }
 
   function calculateCommand(command) {
+    setPositionErr(false)
     // verificar a sintaxe do comando
     let startSquare = {};
     for (let i = 0; i < squares.length; i++) {
@@ -81,9 +83,6 @@ export default function App(props) {
     }
     const finalSquare = determineFinalSquare(startSquare, command);
     const finalSquareIndex = finalSquare.index;
-    if (finalSquareIndex === undefined) {
-      return (positioErr = true);
-    }
     setFinalSquare(startSquare, finalSquare)
   }
 
@@ -98,7 +97,7 @@ export default function App(props) {
     <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap="5" my="5rem">
       <InputField
         isSintaxValid={!sintaxErr}
-        isPositionValid={!positioErr}
+        isPositionValid={!positionErr}
         calculateCommand={calculateCommand}
       />
       <Stack direction="column" w="80%" mx="auto" py="5rem" spacing="5">

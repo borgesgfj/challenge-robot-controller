@@ -13,10 +13,10 @@ function createSquaresMatrix() {
         index: 5 * (4 - y) + x,
         direction: "N",
         neighborsIndex: {
-          N: y + 1 <= 4 ? 5 * (4 - (y + 1)) + x : undefined,
-          S: y - 1 >= 0 ? 5 * (4 - (y - 1)) + x : undefined,
-          E: x + 1 <= 4 ? 5 * (4 - y) + (x + 1) : undefined,
-          W: x - 1 >= 0 ? 5 * (4 - y) + (x - 1) : undefined,
+          N: y + 1 <= 4 ? 5 * (4 - (y + 1)) + x : "",
+          S: y - 1 >= 0 ? 5 * (4 - (y - 1)) + x : "",
+          E: x + 1 <= 4 ? 5 * (4 - y) + (x + 1) : "",
+          W: x - 1 >= 0 ? 5 * (4 - y) + (x - 1) : "",
         },
         occupied: false,
       };
