@@ -8,11 +8,17 @@ function createSquaresMatrix() {
   for (let y = 4; y >= 0; y--) {
     for (let x = 0; x < 5; x++) {
       const squareObject = {
-        xPosition: x,
-        yPosition: y,
+        coordinates: [x, y],
         id: x + y * 5,
-        occupied: false,
+        index: 5 * (4 - y) + x,
         direction: "N",
+        neighborsIndex: {
+          N: y + 1 <= 4 ? 5 * (4 - (y + 1)) + x : "",
+          S: y - 1 >= 0 ? 5 * (4 - (y - 1)) + x : "",
+          E: x + 1 <= 4 ? 5 * (4 - y) + (x + 1) : "",
+          W: x - 1 >= 0 ? 5 * (4 - y) + (x - 1) : "",
+        },
+        occupied: false,
       };
       if (x == 0 && y == 0) {
         squareObject.occupied = true;
