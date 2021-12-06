@@ -37,9 +37,9 @@ export default function App(props) {
   }
 
   function determineFinalSquare(initialSquare, commandString) {
-    let currentSquare = initialSquare;
-    let nextSquareIndex = currentSquare.index;
-    let moveDirection = currentSquare.direction;
+    const currentSquare = {...initialSquare};
+    const nextSquareIndex = initialSquare.index;
+    const moveDirection = initialSquare.direction;
     for (let i = 0; i < commandString.length; i++) {
       if (commandString[i] == "L" || commandString[i] == "R") {
         moveDirection = calculateRotation(moveDirection, commandString[i]);
@@ -48,7 +48,7 @@ export default function App(props) {
       if (commandString[i] == "M") {
         if (currentSquare.neighborsIndex[moveDirection] === "") {
           setPositionErr(true)
-          return (currentSquare = initialSquare)
+          return initialSquare
         }
         nextSquareIndex = currentSquare.neighborsIndex[moveDirection];
         currentSquare = {...squares[nextSquareIndex], direction: moveDirection};
@@ -90,12 +90,11 @@ export default function App(props) {
     let startSquare = {};
     for (let i = 0; i < squares.length; i++) {
       if (squares[i].occupied) {
-        startSquare = squares[i];
+        startSquare = {...squares[i]};
         break;
       }
     }
     const finalSquare = determineFinalSquare(startSquare, command);
-    const finalSquareIndex = finalSquare.index;
     setFinalSquare(startSquare, finalSquare)
   }
 
