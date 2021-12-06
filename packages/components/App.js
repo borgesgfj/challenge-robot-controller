@@ -57,6 +57,18 @@ export default function App(props) {
     currentSquare.occupied = true
     return currentSquare;
   }
+  function reset() {
+    const updatedSquares = squares.map((square) => {
+      if (square.occupied === true) {
+        return {...square, occupied: false, direction: "N"}
+      }
+      if (square.index == 20) {
+        return {...square, occupied: true, direction:"N"}
+      }
+      return {...square, direction: "N"}
+    })
+    setSquares(updatedSquares)
+  }
 
   function setFinalSquare(initialSquare,finalSquare) {
     const updatedSquares = squares.map((square) => {
@@ -120,7 +132,7 @@ export default function App(props) {
         <Grid templateColumns="repeat(5, 1fr)" gap="1">
           {grid}
         </Grid>
-        <Button colorScheme="black" variant="outline" size="md">
+        <Button colorScheme="black" variant="outline" size="md" onClick={reset}>
           Resetar
         </Button>
       </Stack>
