@@ -51,7 +51,7 @@ export default function App(props) {
           return (currentSquare = initialSquare)
         }
         nextSquareIndex = currentSquare.neighborsIndex[moveDirection];
-        currentSquare = squares[nextSquareIndex];
+        currentSquare = {...squares[nextSquareIndex], direction: moveDirection};
       }
     }
     currentSquare.occupied = true
