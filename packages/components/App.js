@@ -70,10 +70,23 @@ export default function App(props) {
     })
     setSquares(updatedSquares)
   }
+  function isCommandSitaxCorrect(commandString) {
+    const validChars = ['M', 'L', 'R']
+    for (const char of commandString ) {
+      if (!validChars.includes(char)) {
+        setSintaxErr(true)
+        return false
+      }
+    }
+    return true
+  }
 
   function calculateCommand(command) {
     setPositionErr(false)
-    // verificar a sintaxe do comando
+    setSintaxErr(false)
+    if (!isCommandSitaxCorrect(command)) {
+      return
+    }
     let startSquare = {};
     for (let i = 0; i < squares.length; i++) {
       if (squares[i].occupied) {
