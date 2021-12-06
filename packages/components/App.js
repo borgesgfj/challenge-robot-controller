@@ -5,8 +5,10 @@ import Square from "./Square";
 
 export default function App(props) {
   const [squares, setSquares] = useState(props.squares);
-  const [positionErr, setPositionErr] = useState(false)
-  const [sintaxErr, setSintaxErr] = useState(false)
+  const [roverDirection, setRoverDirection] = useState("N");
+  const [positionErr, setPositionErr] = useState(false);
+  const [sintaxErr, setSintaxErr] = useState(false);
+
   function calculateRotation(currentDirection, rotationCommand) {
     let finalDirection = 0;
     const directionToNumber = {
@@ -35,86 +37,101 @@ export default function App(props) {
     }
     return numberToDirection[finalDirection];
   }
-
+  function determineFinalDirection(commandString) {
+    let currentDirection = roverDirection;
+    let finalDirection = "";
+    for (let i = 0; i < commandString.length; i++) {
+      if (commandString[i] === "L" || commandString[i] === "R") {
+        finalDirection = calculateRotation(currentDirection, commandString[i]);
+        currentDirection = finalDirection;
+      }
+    }
+    return finalDirection;
+  }
   function determineFinalSquare(initialSquare, commandString) {
-    const currentSquare = {...initialSquare};
+    const currentSquare = { ...initialSquare };
     const nextSquareIndex = initialSquare.index;
-    const moveDirection = initialSquare.direction;
+    const moveDirection = roverDirection;
     for (let i = 0; i < commandString.length; i++) {
       if (commandString[i] == "L" || commandString[i] == "R") {
         moveDirection = calculateRotation(moveDirection, commandString[i]);
-        currentSquare.direction = moveDirection;
       }
       if (commandString[i] == "M") {
         if (currentSquare.neighborsIndex[moveDirection] === "") {
-          setPositionErr(true)
-          return initialSquare
+          return {};
         }
         nextSquareIndex = currentSquare.neighborsIndex[moveDirection];
-        currentSquare = {...squares[nextSquareIndex], direction: moveDirection};
+        currentSquare = { ...squares[nextSquareIndex] };
       }
     }
-    currentSquare.occupied = true
+    currentSquare.occupied = true;
     return currentSquare;
   }
   function reset() {
     const updatedSquares = squares.map((square) => {
       if (square.occupied === true) {
-        return {...square, occupied: false, direction: "N"}
+        return { ...square, occupied: false };
       }
       if (square.index == 20) {
-        return {...square, occupied: true, direction:"N"}
+        return { ...square, occupied: true };
       }
-      return {...square, direction: "N"}
-    })
-    setSquares(updatedSquares)
+      return { ...square };
+    });
+    setSquares(updatedSquares);
+    setRoverDirection("N");
   }
 
-  function setFinalSquare(initialSquare,finalSquare) {
+  function setFinalSquare(initialSquare, finalSquare) {
     const updatedSquares = squares.map((square) => {
       if (square.id === finalSquare.id) {
-        return {...square, occupied: true, direction: finalSquare.direction}
+        return { ...square, occupied: true };
       }
       if (square.id === initialSquare.id) {
-        return {...square, occupied: false}
+        return { ...square, occupied: false };
       }
-      return square
-    })
-    setSquares(updatedSquares)
+      return square;
+    });
+    setSquares(updatedSquares);
   }
   function isCommandSitaxCorrect(commandString) {
-    const validChars = ['M', 'L', 'R']
-    for (const char of commandString ) {
+    const validChars = ["M", "L", "R"];
+    for (const char of commandString) {
       if (!validChars.includes(char)) {
-        setSintaxErr(true)
-        return false
+        setSintaxErr(true);
+        return false;
       }
     }
-    return true
+    return true;
   }
 
   function calculateCommand(command) {
-    setPositionErr(false)
-    setSintaxErr(false)
+    setPositionErr(false);
+    setSintaxErr(false);
     if (!isCommandSitaxCorrect(command)) {
-      return
+      return;
     }
     let startSquare = {};
     for (let i = 0; i < squares.length; i++) {
       if (squares[i].occupied) {
-        startSquare = {...squares[i]};
+        startSquare = { ...squares[i] };
         break;
       }
     }
     const finalSquare = determineFinalSquare(startSquare, command);
-    setFinalSquare(startSquare, finalSquare)
+    if (Object.keys(finalSquare).length == 0) {
+      // in this case rover reach an invalid position
+      setPositionErr(true);
+      return;
+    }
+    setFinalSquare(startSquare, finalSquare);
+    setRoverDirection(() => determineFinalDirection(command));
   }
 
   const grid = squares.map((square) => (
     <Square
       key={square.id}
       occupied={square.occupied}
-      direction={square.direction}
+      direction={roverDirection}
     />
   ));
   return (

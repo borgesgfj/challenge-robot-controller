@@ -1,27 +1,11 @@
-import { Box, Icon, Center } from "@chakra-ui/react";
-import {
-  FaAngleDoubleUp,
-  FaAngleDoubleDown,
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-} from "react-icons/fa";
+import { Box, Center } from "@chakra-ui/react";
+import Rover from "./Rover";
 
 export default function Square(props) {
-  function determineArrowIcon(direction) {
-    let icon = FaAngleDoubleUp
-    if (direction === "S") {
-      icon = FaAngleDoubleDown
-    } else if( direction === "E") {
-      icon = FaAngleDoubleRight
-    } else if (direction === "W" ) {
-      icon = FaAngleDoubleLeft
-    }
-    return icon
-  }
 
   const notOccupiedTemplate = "";
   const occupiedTemplate = (
-    <Icon as={determineArrowIcon(props.direction)} fontSize="5xl" color="white" />
+    <Rover direction={props.direction} />
   );
   return (
     <Box

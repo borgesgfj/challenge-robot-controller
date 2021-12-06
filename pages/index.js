@@ -11,7 +11,6 @@ function createSquaresMatrix() {
         coordinates: [x, y],
         id: x + y * 5,
         index: 5 * (4 - y) + x,
-        direction: "N",
         neighborsIndex: {
           N: y + 1 <= 4 ? 5 * (4 - (y + 1)) + x : "",
           S: y - 1 >= 0 ? 5 * (4 - (y - 1)) + x : "",
