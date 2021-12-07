@@ -46,7 +46,18 @@ export default function App(props) {
         <Grid templateColumns="repeat(5, 1fr)" gap="1">
           {grid}
         </Grid>
-        <Button colorScheme="black" variant="outline" size="md" onClick={reset}>
+        <Button
+          colorScheme="black"
+          variant="outline"
+          size="lg"
+          fontFamily="Roboto"
+          fontSize="2xl"
+          _hover={{
+            transform: "translateY(-1px)",
+            boxShadow: "xl",
+          }}
+          onClick={reset}
+        >
           Resetar
         </Button>
       </Stack>

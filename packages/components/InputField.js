@@ -12,7 +12,6 @@ export default function InputField(props) {
     setCommand("");
   }
 
-
   return (
     <form onSubmit={handleSubmit}>
       <Stack direction="column" spacing="5">
@@ -27,7 +26,17 @@ export default function InputField(props) {
           value={command}
           onChange={handleChange}
         ></Input>
-        <Button type="submit" colorScheme="green" size="md">
+        <Button
+          type="submit"
+          colorScheme="green"
+          size="lg"
+          fontFamily="Roboto"
+          fontSize="2xl"
+          _hover={{
+            transform: "translateY(-1px)",
+            boxShadow: "xl",
+          }}
+        >
           Submeter
         </Button>
       </Stack>
