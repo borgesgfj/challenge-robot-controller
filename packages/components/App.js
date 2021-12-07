@@ -19,6 +19,7 @@ export default function App(props) {
       key={square.id}
       occupied={square.occupied}
       direction={roverDirection}
+      coordinates={square.coordinates}
     />
   ));
   return (
