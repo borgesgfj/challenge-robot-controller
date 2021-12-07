@@ -1,5 +1,4 @@
-import { Stack, Input, Button, Heading, Icon, Badge } from "@chakra-ui/react";
-import { FaExclamationTriangle } from "react-icons/fa";
+import { Stack, Input, Button, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 
 export default function InputField(props) {
@@ -13,31 +12,6 @@ export default function InputField(props) {
     setCommand("");
   }
 
-  function StatusField() {
-    if (props.isSintaxValid && props.isPositionValid) {
-      return (<Stack bg="gray.200" w="80%"></Stack>);
-    }
-    if (!props.isSintaxValid) {
-      return (
-        <Stack bg="gray.200" w="80%" direction="row" my="5">
-          <Icon as={FaExclamationTriangle} fontSize="xl" color="red" />
-          <Badge fontSize="xl" colorScheme="red">
-            Sintaxe inválida! Não foi possível executar o comando.
-          </Badge>
-        </Stack>
-      );
-    }
-    if (!props.isPositionValid) {
-      return (
-        <Stack bg="gray.200" w="80%" direction="row" my="5">
-          <Icon as={FaExclamationTriangle} fontSize="xl" color="red" />
-          <Badge fontSize="xl" colorScheme="red">
-            Posição inválida! Não foi possível executar o comando.
-          </Badge>
-        </Stack>
-      );
-    }
-  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -56,7 +30,6 @@ export default function InputField(props) {
         <Button type="submit" colorScheme="green" size="md">
           Submeter
         </Button>
-        <StatusField/>
       </Stack>
     </form>
   );
