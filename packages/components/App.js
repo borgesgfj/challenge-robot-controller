@@ -23,7 +23,7 @@ export default function App(props) {
     />
   ));
   return (
-    <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap="5" my="1rem">
+    <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap={{ base: "1", lg: "5" }} my="1rem">
       <Stack
         direction="column"
         w="80%"
@@ -38,10 +38,9 @@ export default function App(props) {
           isPositionValid={!positionErr}
         />
       </Stack>
-      <Stack direction="column" w="80%" mx="auto" py="5rem" spacing="5">
+      <Stack direction="column" w="80%" mx="auto" py={{ base: "1rem", lg: "5rem" }} spacing="5">
         <Heading as="h3" fontFamily="Roboto" size="lg">
-          {" "}
-          Grade de posições{" "}
+          Grade de posições
         </Heading>
         <Grid templateColumns="repeat(5, 1fr)" gap="1">
           {grid}
