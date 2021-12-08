@@ -1,6 +1,8 @@
 # :rocket: Desafio - Robô NASA
 
-Olá, este projeto foi proposto pela [UME](https://www.portal.ume.com.br/) como parte do processo seletivo para o cargo de desenvolvedor. Neste README apresentarei uma visão geral do problema e do projeto desenvolvido.
+Olá, este projeto foi proposto pela [UME](https://www.portal.ume.com.br/) como parte do processo seletivo para o cargo de desenvolvedor. 
+Clicando [aqui](https://ume-challenge-robot-controller.vercel.app/) você poderá conferir a página web do projeto :slightly_smiling_face:. 
+Neste README apresentarei uma visão geral do problema e do projeto desenvolvido.
 
 ---
 
@@ -90,7 +92,7 @@ Este projeto na versão atual consiste em uma aplicação _React_, sem integraç
 
  ## Visão Geral sobre o Fornt-End
 
-  A imagem abaixo mostra a página principal da aplicação. A mesma contém uma _navbar_ com um botão no canto superior direito que permite alternar entre tema _dark_ e _light_ (try it!). O conteúdo da página foi dividido em um _grid_, com duas colunas para dispositivos com tela de largura `> = 992px`.
+  A imagem abaixo mostra a página principal da aplicação. A mesma contém uma _navbar_ com um botão no canto superior direito que permite alternar entre tema _dark_ e _light_ (try it :grinning:!). O conteúdo da página foi dividido em um _grid_, com duas colunas para dispositivos com tela de largura `> = 992px`.
   ![Large screen Front-End](public/images/frontendFull.png)
 
   Para dispositivos com tela de larura `< 992px` o _grid_ terá apenas uma coluna, como mostra a imagem abaixo. Esta responsividade foi tratada utilizando os valores padrão dos _breakpoints_ fornecidos pela biblioteca Chakra UI, e passados ao _grid_ com as props de estilo do Chakra. A imagem abaixo também mostra a visualização da página em _dark theme_.
