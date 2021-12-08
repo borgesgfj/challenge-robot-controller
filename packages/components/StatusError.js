@@ -1,9 +1,43 @@
-import { Stack, Icon, Badge } from "@chakra-ui/react";
+import {
+  Stack,
+  Icon,
+  Badge,
+  Box,
+  Text,
+  Heading,
+} from "@chakra-ui/react";
 import { FaExclamationTriangle } from "react-icons/fa";
 
 export default function StatusError(props) {
   if (props.isSintaxValid && props.isPositionValid) {
-    return <Stack w="80%"></Stack>;
+    return (
+      <Box
+        w="full"
+        fontFamily="Roboto"
+        border="2px"
+        borderColor="green.500"
+        boxShadow='lg'
+        _hover={{
+          transform: "translateY(-2px)",
+          boxShadow: "2xl",
+        }}
+      >
+        <Stack direction="column" p="6">
+          <Heading as="h6" fontSize="2xl" alignSelf="center">
+            Comandos válidos
+          </Heading>
+          <Text fontSize="xl" pl="2rem">
+            L - Virar para a esquerda
+          </Text>
+          <Text fontSize="xl" pl="2rem">
+            R - Virar para a direita
+          </Text>
+          <Text fontSize="xl" pl="2rem">
+            M - Mover
+          </Text>
+        </Stack>
+      </Box>
+    );
   }
   if (!props.isSintaxValid) {
     return (
