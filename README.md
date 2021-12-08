@@ -69,8 +69,7 @@ Para exucutar este projeto em seu ambiente local, o seu sistema deverá ter os s
   ```bash
   npm install -g yarn
   ```
-
-  ou se preferir instalá-lo apensa localmente, navega pelo terminal até o repoitório colocado e digite o comando acima sem a _flag_ `-g`.
+ ou se preferir instalá-lo apensa localmente, navega pelo terminal até o repoitório colocado e digite o comando acima sem a _flag_ `-g`.
 
 # :gear: Executando o projeto localmente
 
@@ -83,6 +82,13 @@ yarn dev
 ```
 
 Abra o seu navegador em [http://localhost:3000](http://localhost:3000), ou <kbd>Ctrl</kbd> + <kbd>Click - LMB</kbd> sobre o link que aparecerá no _log_ do terminal.
+
+# :rocket: Realizando o _deploy_ da aplicação.
+ A maneira mais rápida de realizar o _deploy_ de uma aplicação next é utilizando um repositório da [Vercel](https://vercel.com/), e por isso para este projeto preferiu-se por utilizar esta plataforma gratuita.
+ Para realizar o _deploy_ é preciso primeiro se cadastrar na plataforma (pode utilizar sua conta GitHub para login!), após o cadastro você será encaminhado para a página inicial e seguirá os seguintes passos:
+  - Na página _Import Project_ selecione o seu provedor Git (o GitHub no caso deste projeto)
+  - Seleciona o projeto e clique em importar.
+ Pronto, a plataforma fará o _build_ de seu projeto e seguirá automaticamente todo o processo :smiley: .
 
 ---
 
@@ -160,3 +166,4 @@ Algumas melhorias podem ser realziadas neste projeto, dentre elas pode-se destac
 
 - A construção de um Back-End constituído de uma API rest para realizar a lógica do cálculo de posições, bem como a integração desta com a aplicação.
 - A criação de uma página com instruções de uso aos usuários, cujo gerenciamento de rota pode ser facilmente realizado devido o uso do Next.js.
+- Utilização de uma linguagem tipada como por exemplo _TypeScript_.
