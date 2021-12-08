@@ -88,6 +88,15 @@ Abra o seu navegador em [http://localhost:3000](http://localhost:3000), ou <kbd>
 
 Este projeto na versão atual consiste em uma aplicação _React_, sem integração com uma API, sendo desenvolvida portanto apenas um fornt-end interativo para esta aplicação.
 
+ ## Visão Geral sobre o Fornt-End
+
+  A imagem abaixo mostra a página principal da aplicação. A mesma contém uma _navbar_ com um botão no canto superior direito que permite alternar entre tema _dark_ e _light_ (try it!). O conteúdo da página foi dividido em um _grid_, com duas colunas para dispositivos com tela de largura `> = 992px`.
+  ![Large screen Front-End](public/images/frontendFull.png)
+
+  Para dispositivos com tela de larura `< 992px` o _grid_ terá apenas uma coluna, como mostra a imagem abaixo. Esta responsividade foi tratada utilizando os valores padrão dos _breakpoints_ fornecidos pela biblioteca Chakra UI, e passados ao _grid_ com as props de estilo do Chakra. A imagem abaixo também mostra a visualização da página em _dark theme_.
+
+  ![Large screen Front-End](public/images/frontendMobile.png)
+
 ## Estratégia de implementação adotada
 
 A execução deste projeto foi divida em três etapas principais:
@@ -98,12 +107,14 @@ A execução deste projeto foi divida em três etapas principais:
 
 ## Estrutura do projeto.
 
-A fim de obter maior organização do código alguns componentes foram criados em `packages/components`, mais detalhes sobre esses componetes serão dados a seguir.
-Por se tratar de um projeto Next.js o arquivo `.js` que renderizará a página principal é o `/pages/index.js`, no corpo deste arquivo será chamado o componente `<App/>`, o qual será o componente pai de todos os outros componentes criados (_higher-order component_). No arquivo `index.js` também foi declarada uma variável global `SQUARES_MATRIX` que é um _array_ de objetos, com cada objeto contendo as informações de cada quadrado do grid e será passado como `props` ao componente `<App/>`.
+A fim de obter maior organização do código alguns componentes foram criados em `packages/components`, na sequência serão fornecidos mais detalhes sobre alguns destes componentes.
+Por se tratar de um projeto Next.js o arquivo `.js` que renderizará a página principal é o `/pages/index.js`, no corpo deste arquivo será chamado o componente `<App/>`, o qual será o componente pai de todos os outros componentes criados (_higher-order component_). No arquivo `index.js` também foi declarada uma variável global `SQUARES_MATRIX` que é um _array_ de objetos e será passado como `props` ao componente `<App/>`. Cada um dos objetos em `SQUARES_MATRIX` contem as informações de sobre o correspondente quadrado do grid.
 
-## Componentes.
+A lógica de calculo do estado final do robô é implementada pelo componente `useLogic` (definido em `useLogic.js`), o qual é um _hook_ personalizado, que é importado pelo componente `<App\>`. Desta maneira é possível separar a lógica de negócios do Fornt-End.
 
-Aqui será dada uma visão geral sobre os componetes criados para esta aplicação.
+## Principais Componentes.
+
+Aqui será dada uma visão geral sobre alguns os pricinpais componentes desta aplicação, estes constituem uma base para o funcionamento da aplicação.
 
 ### Component Rover.js
 
@@ -111,33 +122,39 @@ Este componente representa o nosso robô, e recebe uma única `props` (`props.di
 
 ### Componete Square.js
 
-Este componente representa uma posição do _grid_ que representa o terreno explorado pelo _rover_. As suas propriedades estão ligadas ao objeto `squareObjects` criado pela função `createSquaresMatrix` e salvas no array `SQUARES_MATRIX`. Quando sua `props.isOcuppied = true` este componente renderiza o componente `<Rover/>`dentro dele, passando `props.direction` para o mesmo.
+Este componente representa uma posição do _grid_ que representa o terreno explorado pelo _rover_. As suas propriedades estão ligadas ao objeto `squareObjects` criado pela função `createSquaresMatrix` e salvas no array `SQUARES_MATRIX`. Quando sua `props.isOcuppied = true` este componente renderiza o componente `<Rover/>`dentro dele, passando `props.direction` para o mesmo. Quando o (a) usuário(a) interage com esse elemento colocando sobre ele o cursor do mouse, as informações sobre suas coordenadas `(x, y)` são mostradas em um _tooltip_.
 
- ### Compunete InputField.js
- Este componente representa o formulário com um `input` do tipo texto e um botão para submeter o comando dado pelo(a) usuário(a). Tem uma _callback_ props (`calculateCommand(command)`) que receberá do componente pai uma função a ser executada quando o comando dado pelo usuário for submetido.
+### Compunete InputField.js
 
- ### Componente App.js
- Este comoponente, como dito anteriormente, será o componente pai de todos os outros elementos. Ele recebe de `index.js` uma lista representando cada quadrado do grid e a passa como props ao estado `squares`, quando um comando é envido pelo(a) usuário(a) a função `calculateCommand`é executada, a qual determinará qual será (caso existir) o próximo quadrado do terreno a ser ocupado pelo _rover_. Também possui os estados `roverDirection` que gerencia a direção do _robô_, `sintaxErr` e `positionErr` que indicam respectivamente se existem erros de sintaxe no comando e se o comando atinge posição inexistente no grid.
+Este componente representa o formulário com um `input` do tipo texto e um botão para submeter o comando dado pelo(a) usuário(a). Tem uma _callback_ props (`calculateCommand(command)`) que receberá do componente pai uma função a ser executada quando o comando dado pelo usuário for submetido.
+
+### Componente App.js
+
+Este comoponente, como dito anteriormente, será o componente pai de todos os outros elementos. Ele recebe de `index.js` como `props` uma lista representando cada quadrado do grid e a passa como parâmetro ao _hook_ `useLogic()`. Também importa de `useLogic()` funções e estados para serem repassados a seus componentes filhos como `props`.
 
 ## Lógica do cáclculo de posição.
- Uma parte importante para a lógica implementada no cálculo da posição e orientação final do robô foi a estruturação dos dados passados ao componente `<App/>` e gerados em `index.js`. Esse dado é uma _array_ de objetos, com cada objeto representado um quadrado do grid. Este objeto contém as seguintes propriedades (chaves) que serão utilizadas:
-  - `coordinates`: que representa as coordenadas (x, y) do quadrado
-  - `id`: que gera um idenficador único para ser utilizado pos Squares como `props.key` na renderização iterativa, que é uma propriedade necessário neste tipo de           renderização em React
-  - `index`: que relaciona as coordenadas (x, y) com o index deste objeto no _array_ em que é armazenado. Esta relação se dá pela equação: `index = 5 * (4 - y) +               x`
-  - `neighborsIndex`: que é um objeto  indica o index dos quadrados vizinhos em cada direção (N, W, S, E), quando esses vizinhos não existem em uma dada direção                         esse valor recebe uma _string_ vazia.
-  - `occupied`: que recebe um valor _booleano_ indicado se este quadrado está ocupado ou não.
- A lógica para determinar a posição e orientação final do robô é implementada da seguinte maneira:
- 1. Após validar a sintaxe do comando enviado, a função `calculateCommand` percorre o array de estado `squares` e identifica o objeto que possui a prorpiedade `occupied = true`, passando este objeto e o    comando enviado (`command`) para a função `determineFinalSquare`.
- 2. A função `determineFinalSquare` toma o estado inicial de direção do _robô_ (roverDirection) como inicialização da posição do robô (`moveDirecion`) e usa o objeto representando a posição inicial passada para ela (`initialSquare`) para inicializar a poisção atual do robô (`currentSquare`), após isso itera sobre a _string_ recebida analisando o tipo de comando:
-    - Se for um comando de movimentação (`M`) ela busca na propriedade `neighborsIndex` de `currentSquare` qual o index do quadrado vizinho na direção em que o rover aponta. Caso esse index seja `" "` então esse quadrado está fora da área do grid e a função retorna um objeto vazio. Por outro lado, caso o index exista `currentSquare` é atualizado com um objeto no _array_ de estado `squares` de posição igual ao index encontrado.
+
+Uma parte importante para a lógica implementada no cálculo da posição e orientação final do robô foi a estruturação dos dados em `SQUARES_MATRIX` passados ao componente `<App/>`. Os objetos nesta lista possuem as seguintes propriedades (chaves) que serão utilizadas:
+
+- `coordinates`: que representa as coordenadas (x, y) do quadrado
+- `id`: que gera um idenficador único para ser utilizado pos Squares como `props.key` na renderização iterativa, que é uma propriedade necessário neste tipo de renderização em React
+- `index`: que relaciona as coordenadas (x, y) com o index deste objeto no _array_ em que é armazenado. Esta relação se dá pela equação: `index = 5 * (4 - y) + x`
+- `neighborsIndex`: que é um objeto indica o index dos quadrados vizinhos em cada direção (N, W, S, E), quando esses vizinhos não existem em uma dada direção esse valor recebe uma _string_ vazia.
+- `occupied`: que recebe um valor _booleano_ indicado se este quadrado está ocupado ou não.
+
+A lógica para determinar a posição e orientação final do robô é implementada em `useLogic.js` da seguinte maneira:
+
+1.  Após validar a sintaxe do comando enviado, a função `calculateCommand` percorre o array de estado `squares` e identifica o objeto que possui a prorpiedade `occupied = true`, passando este objeto e o comando enviado (`command`) para a função `determineFinalSquare`.
+2.  A função `determineFinalSquare` toma o estado inicial de direção do _robô_ (roverDirection) como inicialização da orientação (`moveDirecion`) e usa o objeto representando a posição inicial passada para ela (`initialSquare`) para inicializar a poisção atual do robô (`currentSquare`). Após isso itera sobre a _string_ recebida analisando o tipo de comando:
+    - Se for um comando de movimentação (`M`) ela busca na propriedade `neighborsIndex` de `currentSquare` qual o index do quadrado vizinho na direção em que o rover aponta. Caso esse index seja `" "` então esse quadrado está fora da área do grid e a função retorna um objeto vazio. Por outro lado, caso o index exista `currentSquare` recebe o objeto no _array_ de estado `squares` de posição igual ao index encontrado.
     - Se for um comando de rotação (`L` ou `R`) a função `calculateRotation` é chamada recebendo a direção atual do rover e o camando de rotação. Em posse desses parâmetros `calculateRotation` primeiro transfomra a string de posição em um número usando o dicionário `directionToNumber` e soma 1 a este número no caso de uma rotação no sentido positivo (`L`) ou subtrai 1 para rotação no sentido negativo (`R`). Caso o número obtido seja `> = 4` subtraimos 4 do valor obtido e caso esse valor seja `< = 4` soma-se 4, explorando desta forma a propriedade `mod 4`destes valores, onde 4 é equivalente a 0, -1 equivalente a 3 e etc. Por fim o número obtido é convertido na _string_ que representa a direção após aquela rotação, através do dicionário numberToDirection.
-  Ao final esta função retorna o objeto que representa o quadrado que será ocupado pelo robô.
-  3. A função `calculateCommand` armazena o retorno de `determineFinalSquare` e analisa se o objeto retornado é vazio (comprimento do _array_ de chaves é 0) caso seja ela chama `setPositionErr()` que gerencia o estado de erro de posição e passa para ela o valor true retornando em seguida. Caso a posição retornada seja válida ela chama `setFinalSquare` que gera um novo _array_ de objetos, desocupando aquele ocupado previamente e ocupando aquele que representa a posição final, passando esse novo _array_ para `setSquares` que gerencia o _hook_ de estado `squares`.
-  4. Por fim a função que gerencia o _hook_ de estado `roverDiretion` é chamada passando para ela uma callback que analisa apenas os comandos de rotação e atualiza a orientação final do robô.
+      Ao final a função `determineFinalSquare` retorna o objeto que representa o quadrado que será ocupado pelo robô.
+3.  A função `calculateCommand` armazena o retorno de `determineFinalSquare` e analisa se o objeto retornado é vazio (comprimento do _array_ de chaves é 0) caso seja ela chama `setPositionErr()` que gerencia o estado de erro de posição e passa para ela o valor true retornando em seguida. Caso a posição retornada seja válida ela chama `setFinalSquare` que gera um novo _array_ de objetos, desocupando aquele ocupado previamente e ocupando aquele que representa a posição final e passa esse novo _array_ para `setSquares` que gerencia o _hook_ de estado `squares`.
+4.  Por fim, caso o comando contenha instruções de rotação a função que gerencia o _hook_ de estado `roverDiretion` é chamada passando para ela uma callback que analisa apenas os comandos de rotação e atualiza a orientação final do robô.
 
 # Melhorias e desdobramentos futuros:
- Algumas melhorias podem ser realziadas neste projeto, dentre elas pode-se destacar:
-  - A construção de um Back-End constituído de uma API rest para realizar a lógica do cálculo de posições, bem como a integração desta com a aplicação.
-  - A criação de uma página com instruções de uso aos usuários, cujo gerenciamento de rota pode ser facilmente realizado devido o uso do Next.js.
 
+Algumas melhorias podem ser realziadas neste projeto, dentre elas pode-se destacar:
 
+- A construção de um Back-End constituído de uma API rest para realizar a lógica do cálculo de posições, bem como a integração desta com a aplicação.
+- A criação de uma página com instruções de uso aos usuários, cujo gerenciamento de rota pode ser facilmente realizado devido o uso do Next.js.
