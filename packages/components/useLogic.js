@@ -33,8 +33,8 @@ export function useLogic(squaresMatrix) {
     }
     return numberToDirection[finalDirection];
   }
-  function determineFinalDirection(commandString) {
-    let currentDirection = roverDirection;
+  function determineFinalDirection(commandString, initialDirection) {
+    let currentDirection = initialDirection;
     let finalDirection = "";
     for (let i = 0; i < commandString.length; i++) {
       if (commandString[i] === "L" || commandString[i] === "R") {
@@ -103,6 +103,7 @@ export function useLogic(squaresMatrix) {
   function calculateCommand(command) {
     setPositionErr(false);
     setSintaxErr(false);
+    const initialDirection = roverDirection;
     if (!isCommandSitaxCorrect(command)) {
       return;
     }
@@ -120,7 +121,11 @@ export function useLogic(squaresMatrix) {
       return;
     }
     setFinalSquare(startSquare, finalSquare);
-    setRoverDirection(() => determineFinalDirection(command));
+    if (command.includes("L") || command.includes("R")) {
+      setRoverDirection(() =>
+        determineFinalDirection(command, initialDirection)
+      );
+    }
   }
   return {
     sintaxErr,
