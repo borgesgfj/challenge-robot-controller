@@ -23,7 +23,7 @@ export default function App(props) {
     />
   ));
   return (
-    <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap="5" my="5rem">
+    <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap="5" my="1rem">
       <Stack
         direction="column"
         w="80%"
