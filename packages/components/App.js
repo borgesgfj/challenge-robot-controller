@@ -19,10 +19,11 @@ export default function App(props) {
       key={square.id}
       occupied={square.occupied}
       direction={roverDirection}
+      coordinates={square.coordinates}
     />
   ));
   return (
-    <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap="5" my="5rem">
+    <Grid templateColumns={{ base: "auto", lg: "1fr 1fr" }} gap="5" my="1rem">
       <Stack
         direction="column"
         w="80%"
@@ -45,7 +46,18 @@ export default function App(props) {
         <Grid templateColumns="repeat(5, 1fr)" gap="1">
           {grid}
         </Grid>
-        <Button colorScheme="black" variant="outline" size="md" onClick={reset}>
+        <Button
+          colorScheme="black"
+          variant="outline"
+          size="lg"
+          fontFamily="Roboto"
+          fontSize="2xl"
+          _hover={{
+            transform: "translateY(-1px)",
+            boxShadow: "xl",
+          }}
+          onClick={reset}
+        >
           Resetar
         </Button>
       </Stack>
