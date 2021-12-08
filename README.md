@@ -1,7 +1,7 @@
 # :rocket: Desafio - Robô NASA
 
 Olá, este projeto foi proposto pela [UME](https://www.portal.ume.com.br/) como parte do processo seletivo para o cargo de desenvolvedor. 
-Clicando [aqui](https://ume-challenge-robot-controller.vercel.app/) você poderá conferir a página web do projeto :slightly_smiling_face:. 
+Clicando [aqui](https://challenge-robot-controller.vercel.app/) você poderá conferir a página web do projeto :slightly_smiling_face:. 
 Neste README apresentarei uma visão geral do problema e do projeto desenvolvido.
 
 ---
