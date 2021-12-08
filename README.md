@@ -88,6 +88,15 @@ Abra o seu navegador em [http://localhost:3000](http://localhost:3000), ou <kbd>
 
 Este projeto na versão atual consiste em uma aplicação _React_, sem integração com uma API, sendo desenvolvida portanto apenas um fornt-end interativo para esta aplicação.
 
+ ## Visão Geral sobre o Fornt-End
+
+  A imagem abaixo mostra a página principal da aplicação. A mesma contém uma _navbar_ com um botão no canto superior direito que permite alternar entre tema _dark_ e _light_ (try it!). O conteúdo da página foi dividido em um _grid_, com duas colunas para dispositivos com tela de largura `> = 992px`.
+  ![Large screen Front-End](public/images/frontendFull.png)
+
+  Para dispositivos com tela de larura `< 992px` o _grid_ terá apenas uma coluna, como mostra a imagem abaixo. Esta responsividade foi tratada utilizando os valores padrão dos _breakpoints_ fornecidos pela biblioteca Chakra UI, e passados ao _grid_ com as props de estilo do Chakra. A imagem abaixo também mostra a visualização da página em _dark theme_.
+
+  ![Large screen Front-End](public/images/frontendMobile.png)
+
 ## Estratégia de implementação adotada
 
 A execução deste projeto foi divida em três etapas principais:
